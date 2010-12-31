@@ -1,0 +1,42 @@
+<?xml  version="1.0"  encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+<bean id="DateFormat01" class="reyes.melanio.portfolio.RssDigester.DateFormat" >
+	<constructor-arg value="EEE, dd MMM yyyy HH:mm:ss z"/>
+</bean>
+<bean id="DateFormat02" class="reyes.melanio.portfolio.RssDigester.DateFormat" >
+	<constructor-arg value="EEE, dd MMM yy HH:mm:ss z"/>
+</bean>
+<bean id="DateFormat03" class="reyes.melanio.portfolio.RssDigester.DateFormat" >
+	<constructor-arg value="yyyy-MM-dd'T'HH:mm:ss'Z'" />
+</bean>
+<bean id="DateParserBean" class="reyes.melanio.portfolio.RssDigester.DateParser" >
+	<property name="DATE_FORMATS" >
+		<list>
+			<ref bean="DateFormat01"/>
+			<ref bean="DateFormat02"/>
+			<ref bean="DateFormat03"/>
+		</list>
+	</property>
+</bean>
+<bean id="RssParserBean" class="reyes.melanio.portfolio.RssDigester.RssParser" >
+	<property name="Date_Parser" ref="DateParserBean"/>
+</bean>
+<bean id="AtomParserBean" class="reyes.melanio.portfolio.RssDigester.AtomParser" >
+	<property name="Date_Parser" ref="DateParserBean"/>
+</bean>
+<bean id="FeedManagerBean" class="reyes.melanio.portfolio.RssDigester.FeedManager" >
+	<property name="parsers">
+		<list>
+			<ref bean="RssParserBean"/>
+			<ref bean="AtomParserBean"/>
+		</list>
+	</property>
+</bean>
+
+</beans>

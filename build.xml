@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<project name="RssDigesterWithSpring" basedir="." default="usage">
+    <property name="name" value="RssDigesterWithSpring"/>
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="classes"/>
+    <property name="main-class" value="reyes.melanio.portfolio.RssDigester.MainTestRunner"/>
+
+    <path id="classpath">
+        <fileset dir="lib">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="lib/spring-dist">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement path="${build.dir}"/>
+    </path>
+
+    <target name="usage">
+        <echo message=""/>
+        <echo message="${name} Ant Build"/>
+        <echo message=""/>
+        <echo message="Available Targets:"/>
+        <echo message=""/>
+        <echo message="build     --> Builds ${name}"/>
+        <echo message="run       --> Runs ${name} using default RSS urls"/>
+        <echo message="clean     --> Deletes classes directory"/>
+        <echo message=""/>
+    </target>
+
+    <target name="build" description="Compiles java files">
+        <mkdir dir="${build.dir}"/>
+        <javac destdir="${build.dir}" 
+               source="1.5" 
+               target="1.5"
+               debug="true"
+               deprecation="false" 
+               optimize="false" 
+               failonerror="true" 
+               includeantruntime="false">
+            <src path="${src.dir}"/>
+            <classpath refid="classpath"/>
+        </javac>
+        <copy todir="${build.dir}" verbose="false">
+            <fileset dir="${src.dir}">
+               <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target> 
+
+    <target name="run" depends="build" description="Runs ${name} name using default urls">
+        <java fork="true" classname="${main-class}">
+            <classpath>
+                <path refid="classpath"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="clean" description="Deletes classes directory">
+        <delete dir="${build.dir}"/>
+    </target>
+
+</project>
