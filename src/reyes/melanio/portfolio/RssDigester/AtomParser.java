@@ -24,7 +24,7 @@ public class AtomParser implements Parser {
 	public boolean checkFormat( Document document) {
 		boolean result = false;
 		String namespace = document.getRootElement().getNamespace().getURI();
-		if (namespace.equals(ATOM_NAMESPACE)) {
+		if (ATOM_NAMESPACE.equals(namespace)) {
 			result = true;
 		}
 		return result;		
